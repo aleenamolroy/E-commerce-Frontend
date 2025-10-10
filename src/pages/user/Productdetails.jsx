@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAsyncValue, useNavigate, useParams } from "react-router-dom";
 import api from "../../Axios";
-import Navbar from "../../components/User/Navbar"; // Use User Navbar if it’s for users
+import Navbar from "../../components/User/Navbar"; 
 import { useAuth } from "./Authcontext";
 export default function Productdetails() {
   const { id } = useParams();
@@ -36,8 +36,7 @@ const handlecart=async ()=>{
     }
         const res=await api.post(`cart/Addcart/${id}`,{quantity:1},{withCredentials:true})
         console.log(res);
-        
-        alert(res.data?.message)
+        // alert(res.data?.message)
     }
     catch(err){
         alert(err.response?.data?.message)

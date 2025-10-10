@@ -16,6 +16,8 @@ import OrdersView from "./pages/OrdersView";
 import { Authprovider } from "./pages/user/Authcontext";
 import Home from "./pages/user/Home";
 import Productdetails from "./pages/user/Productdetails";
+import Cartview from "./pages/user/cartView";
+import { Cartprovider } from "./pages/user/Cartcontext";
 export default function App() {
   return (
     <div>
@@ -108,17 +110,34 @@ export default function App() {
           path="/Home"
           element={
             <Authprovider>
-              < Home/>
+< Home/>
+                
+              
             </Authprovider>
           }
         />
-                <Route path="/" element={<Authprovider><Home /></Authprovider>} />
+                <Route path="/" element={<Authprovider>
+                  <Cartprovider>
+
+                  <Home />
+                  </Cartprovider>
+                  </Authprovider>} />
 
         <Route
           path="/product/:id"
           element={
             <Authprovider>
               < Productdetails/>
+
+            </Authprovider>
+          }
+        />
+      <Route
+          path="/cart"
+          element={
+            <Authprovider>
+              < Cartview/>
+
             </Authprovider>
           }
         />

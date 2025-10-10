@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import userlogo from "../../assets/download.png";
@@ -10,8 +10,10 @@ import {
   faBoxOpen,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import { useCart } from "../../pages/user/Cartcontext";
 export default function Navbar() {
   const { user, logout } = useAuth();
+  // const {cartCount}=useCart()
   const navigate=useNavigate()
   const handlelogout=async ()=>{
     try{
@@ -68,7 +70,7 @@ export default function Navbar() {
                   className="flex items-center space-x-1 hover:text-blue-600 transition"
                 >
                   <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                  <span>Cart</span>
+                  {/* <span>Cart({cartCount})</span> */}
                 </Link>
                 <Link
                   to="/orders"
