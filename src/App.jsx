@@ -18,6 +18,7 @@ import Home from "./pages/user/Home";
 import Productdetails from "./pages/user/Productdetails";
 import Cartview from "./pages/user/cartView";
 import { Cartprovider } from "./pages/user/Cartcontext";
+import Order from "./pages/user/Order";
 export default function App() {
   return (
     <div>
@@ -137,6 +138,15 @@ export default function App() {
           element={
             <Authprovider>
               < Cartview/>
+
+            </Authprovider>
+          }
+        />
+      <Route
+          path="/order"
+          element={
+            <Authprovider>
+              < Order/>
 
             </Authprovider>
           }

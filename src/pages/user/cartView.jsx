@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/User/Navbar";
 import api from "../../Axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Cartview() {
   const [cart, setCart] = useState(null);
-  
+  const navigate=useNavigate()
     const Fetchcart = async () => {
       try {
         const res = await api.get("cart/showcart");
@@ -50,9 +51,10 @@ export default function Cartview() {
 
     }
   }
-  const handleremove=async(productId)=>{
+  const handleremove=async(productId,quantity)=>{
     try{
-        await api.delete(`cart/cartdelete/${productId}`)
+        console.log(quantity)
+        await api.delete(`cart/cartdelete/${productId}`,{data:{quantity:quantity}})
         await Fetchcart()
     }
     catch(err){
@@ -60,6 +62,16 @@ export default function Cartview() {
 
     }
   }
+  const placeOrder= async(cartItems)=>{
+        try{
+            const res=await api.post('order/createOrder',{items:cartItems})
+            navigate('/order')
+        }
+        catch(err){
+            alert(err.response?.data?.message)
+            console.log(err)
+        }
+    }
   if (!cart) {
     return (
       <>
@@ -70,7 +82,6 @@ export default function Cartview() {
       </>
     );
   }
-        console.log(cart)
 
   return (
     <>
@@ -120,7 +131,7 @@ export default function Cartview() {
                   <p className="text-gray-800 font-semibold">
                     ₹{item.subtotal}
                   </p>
-                  <button className="text-red-500 hover:text-red-700 mt-2" onClick={()=>handleremove(item.product.id)}>
+                  <button className="text-red-500 hover:text-red-700 mt-2" onClick={()=>handleremove(item.product.id,item.quantity)}>
                     remove
                   </button>
                 </div>
@@ -143,9 +154,9 @@ export default function Cartview() {
             <hr />
             <div className="flex justify-between font-bold text-gray-800 text-lg">
               <span>Total</span>
-              <span>₹{cart.totalPrice + 100}</span>
+              <span>₹{cart.totalPrice}</span>
             </div>
-            <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+            <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" onClick={()=>placeOrder()}>
               Proceed to Checkout
             </button>
           </div>

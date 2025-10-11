@@ -9,23 +9,22 @@ import {
   faCartShopping,
   faBoxOpen,
   faMagnifyingGlass,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../../pages/user/Cartcontext";
 export default function Navbar() {
   const { user, logout } = useAuth();
   // const {cartCount}=useCart()
-  const navigate=useNavigate()
-  const handlelogout=async ()=>{
-    try{
-    await api.post('logout',{withCredentials:true})
-    logout()
-    navigate('/Home')
+  const navigate = useNavigate();
+  const handlelogout = async () => {
+    try {
+      await api.post("logout", { withCredentials: true });
+      logout();
+      navigate("/Home");
+    } catch (err) {
+      alert(err.response?.data?.message);
     }
-    catch(err){
-        alert(err.response?.data?.message)
-    }
-
-  }
+  };
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 h-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,6 +45,7 @@ export default function Navbar() {
               placeholder="Search Products.."
               className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            
           </div>
           <div className="flex items-center space-x-4">
             {!user ? (
@@ -65,6 +65,12 @@ export default function Navbar() {
               </>
             ) : (
               <>
+              <Link to="/Home">
+              <FontAwesomeIcon
+                icon={faHome}
+                  className="flex items-center space-x-1 hover:text-blue-600 transition"
+              />
+            </Link>
                 <Link
                   to="/cart"
                   className="flex items-center space-x-1 hover:text-blue-600 transition"
@@ -73,14 +79,14 @@ export default function Navbar() {
                   {/* <span>Cart({cartCount})</span> */}
                 </Link>
                 <Link
-                  to="/orders"
+                  to="/order"
                   className="flex items-center space-x-1 hover:text-blue-600 transition"
                 >
                   <FontAwesomeIcon icon={faBoxOpen} className="w-5 h-5" />
                   <span>Orders</span>
                 </Link>
                 <div className="relative space-y-1 flex">
-                  <Link to="/ViewProfile"> 
+                  <Link to="/ViewProfile">
                     <img
                       src={userlogo}
                       alt={user.name}
@@ -91,7 +97,14 @@ export default function Navbar() {
                 <div>
                   <p>{user.name}</p>
                 </div>
-                <div><button className="bg-red-600 rounded-md p-2" onClick={()=>handlelogout()}>Logout</button></div>
+                <div>
+                  <button
+                    className="bg-red-600 rounded-md p-2"
+                    onClick={() => handlelogout()}
+                  >
+                    Logout
+                  </button>
+                </div>
               </>
             )}
           </div>
