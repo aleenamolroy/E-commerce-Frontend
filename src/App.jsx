@@ -18,7 +18,9 @@ import Home from "./pages/user/Home";
 import Productdetails from "./pages/user/Productdetails";
 import Cartview from "./pages/user/cartView";
 import { Cartprovider } from "./pages/user/Cartcontext";
+import Viewprofile from "./pages/user/Viewprofile";
 import Order from "./pages/user/Order";
+import Updateprofile from "./pages/user/Updateprofile";
 export default function App() {
   return (
     <div>
@@ -111,43 +113,58 @@ export default function App() {
           path="/Home"
           element={
             <Authprovider>
-< Home/>
-                
-              
+              <Home />
             </Authprovider>
           }
         />
-                <Route path="/" element={<Authprovider>
-                  <Cartprovider>
-
-                  <Home />
-                  </Cartprovider>
-                  </Authprovider>} />
+        <Route
+          path="/"
+          element={
+            <Authprovider>
+              <Cartprovider>
+                <Home />
+              </Cartprovider>
+            </Authprovider>
+          }
+        />
 
         <Route
           path="/product/:id"
           element={
             <Authprovider>
-              < Productdetails/>
-
+              <Productdetails />
             </Authprovider>
           }
         />
-      <Route
+        <Route
           path="/cart"
           element={
             <Authprovider>
-              < Cartview/>
-
+              <Cartview />
             </Authprovider>
           }
         />
-      <Route
+        <Route
           path="/order"
           element={
             <Authprovider>
-              < Order/>
-
+              <Order />
+            </Authprovider>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Authprovider>
+              <Viewprofile/>
+            </Authprovider>
+          }
+        />
+        <Route
+          path="/update"
+          element={
+            <Authprovider>
+              <Updateprofile/>
             </Authprovider>
           }
         />

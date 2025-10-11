@@ -86,9 +86,9 @@ export default function Navbar() {
                   <span>Orders</span>
                 </Link>
                 <div className="relative space-y-1 flex">
-                  <Link to="/ViewProfile">
+                  <Link to="/profile">
                     <img
-                      src={userlogo}
+                      src={`http://localhost:3000/uploads/${user.profile_image}`}
                       alt={user.name}
                       className="w-10 h-10 rounded-full cursor-pointer"
                     />
