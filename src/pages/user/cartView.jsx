@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/User/Navbar";
 import api from "../../Axios";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "./Cartcontext";
 
 export default function Cartview() {
   const [cart, setCart] = useState(null);
+  const {decrementCart,resetcart}=useCart()
   const navigate=useNavigate()
     const Fetchcart = async () => {
       try {
@@ -51,20 +53,23 @@ export default function Cartview() {
 
     }
   }
-  const handleremove=async(productId,quantity)=>{
-    try{
-        console.log(quantity)
-        await api.delete(`cart/cartdelete/${productId}`,{data:{quantity:quantity}})
-        await Fetchcart()
-    }
-    catch(err){
-            alert(err.response?.data?.message || "Something went wrong");
+    const handleremove=async(productId,quantity)=>{
+      try{
+          console.log(quantity)
+          await api.delete(`cart/cartdelete/${productId}`,{data:{quantity:quantity}})
+          await Fetchcart()
+          decrementCart();
 
+      }
+      catch(err){
+              alert(err.response?.data?.message || "Something went wrong");
+
+      }
     }
-  }
   const placeOrder= async(cartItems)=>{
         try{
             const res=await api.post('order/createOrder',{items:cartItems})
+            resetcart()
             navigate('/order')
         }
         catch(err){
@@ -75,7 +80,6 @@ export default function Cartview() {
   if (!cart) {
     return (
       <>
-        <Navbar />
         <div className="min-h-screen flex justify-center items-center text-gray-600 text-xl">
           Your cart is empty 🛒
         </div>
@@ -85,7 +89,7 @@ export default function Cartview() {
 
   return (
     <>
-      <Navbar />
+    {/* <Navbar/> */}
       <div className="min-h-screen bg-gray-100 p-6">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">Your Cart</h1>
 

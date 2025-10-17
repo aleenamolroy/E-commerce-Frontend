@@ -58,7 +58,6 @@ const updatedUser = {
 
   return (
     <>
-      <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="p-8 rounded-lg shadow max-w-lg w-full bg-white">
           <h2 className="text-2xl font-semibold mb-6 text-center">

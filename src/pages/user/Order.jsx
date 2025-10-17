@@ -31,7 +31,6 @@ export default function Order() {
   };
   return (
     <>
-      <Navbar />
       <div className="max-w-3xl mx-auto my-10 px-4">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Orders</h1>
 

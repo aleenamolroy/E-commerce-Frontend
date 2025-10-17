@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import userlogo from "../../assets/download.png";
@@ -14,8 +14,10 @@ import {
 import { useCart } from "../../pages/user/Cartcontext";
 export default function Navbar() {
   const { user, logout } = useAuth();
-  // const {cartCount}=useCart()
+  const { cartCount } = useCart();
   const navigate = useNavigate();
+  const [searchTerm, setsearchTerm] = useState("");
+  // const [Count,setCount] = useState(0)
   const handlelogout = async () => {
     try {
       await api.post("logout", { withCredentials: true });
@@ -23,6 +25,14 @@ export default function Navbar() {
       navigate("/Home");
     } catch (err) {
       alert(err.response?.data?.message);
+    }
+  };
+  //
+
+  const handlesearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/search?name=${encodeURIComponent(searchTerm)}`);
+      setsearchTerm("");
     }
   };
   return (
@@ -36,16 +46,25 @@ export default function Navbar() {
             </span>
           </div>
           <div className="flex items-center space-x-2 relative">
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className="absolute left-35 top-1/2 transform -translate-y-1/2 text-gray-400"
-            />
+            <button
+              onClick={handlesearch}
+              className="absolute left-40 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+              aria-label="Search"
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
             <input
               type="text"
               placeholder="Search Products.."
+              value={searchTerm}
+              onChange={(e) => setsearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handlesearch();
+                }
+              }}
               className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            
           </div>
           <div className="flex items-center space-x-4">
             {!user ? (
@@ -65,18 +84,25 @@ export default function Navbar() {
               </>
             ) : (
               <>
-              <Link to="/Home">
-              <FontAwesomeIcon
-                icon={faHome}
-                  className="flex items-center space-x-1 hover:text-blue-600 transition"
-              />
-            </Link>
+                <Link to="/Home">
+                  <FontAwesomeIcon
+                    icon={faHome}
+                    className="flex items-center space-x-1 hover:text-blue-600 transition"
+                  />
+                </Link>
                 <Link
                   to="/cart"
                   className="flex items-center space-x-1 hover:text-blue-600 transition"
                 >
-                  <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                  {/* <span>Cart({cartCount})</span> */}
+                  <FontAwesomeIcon
+                    icon={faCartShopping}
+                    className="w-5 h-5 relative"
+                  />
+                  {cartCount > 0 && (
+                    <span className="absolute top-2  bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                      {cartCount}
+                    </span>
+                  )}
                 </Link>
                 <Link
                   to="/order"

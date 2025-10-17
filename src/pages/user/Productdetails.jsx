@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAsyncValue, useNavigate, useParams } from "react-router-dom";
 import api from "../../Axios";
-import Navbar from "../../components/User/Navbar"; 
 import { useAuth } from "./Authcontext";
+import { useCart } from "./Cartcontext";
+// import { createContext,useContext } from "react";
+// const Cartcontext = createContext(); 
 export default function Productdetails() {
   const { id } = useParams();
+  const {incrementCart}=useCart()
   const [product, setProduct] = useState(null);
-  const {user}=useAuth()
-  const navigate=useNavigate()
+  const { user } = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await api.get(`product/productsearch/${id}`);
-        setProduct(res.data.product);
-      } catch (err) {
-        alert(err.response?.data?.message || "Error fetching product");
-      }
-    };
     fetchProduct();
   }, [id]);
+  //
+
+
+  const fetchProduct = async () => {
+    try {
+      const res = await api.get(`product/productsearch/${id}`);
+      setProduct(res.data.product);
+    } catch (err) {
+      alert(err.response?.data?.message || "Error fetching product");
+    }
+  };
 
   if (!product) {
     return (
@@ -27,24 +33,27 @@ export default function Productdetails() {
       </div>
     );
   }
-const handlecart=async ()=>{
-    
-    try{
-      if(!user){
-        navigate('/login')
+  const handlecart = async () => {
+    try {
+      if (!user) {
+        navigate("/login");
         return;
+      }
+      const res = await api.post(
+        `cart/Addcart/${id}`,
+        { quantity: 1 },
+        { withCredentials: true }
+      );
+      incrementCart()
+      console.log(res);
+      // alert(res.data?.message)
+    } catch (err) {
+      alert(err.response?.data?.message);
     }
-        const res=await api.post(`cart/Addcart/${id}`,{quantity:1},{withCredentials:true})
-        console.log(res);
-        // alert(res.data?.message)
-    }
-    catch(err){
-        alert(err.response?.data?.message)
-    }
-}
+  };
   return (
     <>
-      <Navbar />
+     {/* <Navbar/> */}
       <div className="flex justify-center items-center min-h-screen bg-gray-50 py-12 px-4">
         <div className="bg-white shadow-lg rounded-2xl p-8 max-w-3xl w-full">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -66,7 +75,10 @@ const handlecart=async ()=>{
               <p className="text-gray-700 mb-4">{product.description}</p>
               <p className="text-gray-500 mb-2">Brand: {product.brand}</p>
               <p className="text-gray-500 mb-4">Stock: {product.stock}</p>
-              <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition" onClick={handlecart}>
+              <button
+                className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                onClick={handlecart}
+              >
                 Add to Cart
               </button>
             </div>

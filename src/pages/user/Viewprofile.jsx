@@ -20,7 +20,6 @@ export default function Viewprofile() {
   
   return (
     <>
-      <Navbar />
      
       
       <div className="flex justify-center items-center min-h-screen bg-gray-100">

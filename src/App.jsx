@@ -21,6 +21,7 @@ import { Cartprovider } from "./pages/user/Cartcontext";
 import Viewprofile from "./pages/user/Viewprofile";
 import Order from "./pages/user/Order";
 import Updateprofile from "./pages/user/Updateprofile";
+import Searchproduct from "./pages/user/Searchproduct";
 export default function App() {
   return (
     <div>
@@ -100,75 +101,52 @@ export default function App() {
             </AdminRoute>
           }
         />
-
+        <Route
+          path="/*"
+          element={
+            <Authprovider>
+              <Cartprovider>
+                <UserRouter />
+              </Cartprovider>
+            </Authprovider>
+          }
+        />
         <Route
           path="/login"
           element={
             <Authprovider>
-              <Userlogin />
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/Home"
-          element={
-            <Authprovider>
-              <Home />
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <Authprovider>
               <Cartprovider>
-                <Home />
+                <Userlogin />
               </Cartprovider>
             </Authprovider>
           }
         />
 
-        <Route
-          path="/product/:id"
-          element={
-            <Authprovider>
-              <Productdetails />
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <Authprovider>
-              <Cartview />
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/order"
-          element={
-            <Authprovider>
-              <Order />
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Authprovider>
-              <Viewprofile/>
-            </Authprovider>
-          }
-        />
-        <Route
-          path="/update"
-          element={
-            <Authprovider>
-              <Updateprofile/>
-            </Authprovider>
-          }
-        />
       </Routes>
     </div>
+  );
+}
+import {
+  Routes as UserRoutesWrapper,
+  Route as UserRoute,
+} from "react-router-dom";
+import Navbar from "./components/User/Navbar";
+
+function UserRouter() {
+  return (
+    <>
+     <Navbar/>
+    <UserRoutesWrapper>
+      <UserRoute path="/Home" element={<Home />} />
+      <UserRoute path="/" element={<Home />} />
+
+      <UserRoute path="/product/:id" element={<Productdetails />} />
+      <UserRoute path="/cart" element={<Cartview />} />
+      <UserRoute path="/order" element={<Order />} />
+      <UserRoute path="/profile" element={<Viewprofile />} />
+      <UserRoute path="/update" element={<Updateprofile />} />
+      <UserRoute path="/search" element={<Searchproduct />} />
+    </UserRoutesWrapper>
+    </>
   );
 }

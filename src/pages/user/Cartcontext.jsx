@@ -1,29 +1,28 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import api from '../../Axios'
-const Cartcontext =createContext()
-export  function Cartprovider({childern}) {
-        const [cartCount,setcartCount]=useState(0)
-        useEffect(()=>{
-            const fetchCart=async()=>{ 
-                try {
-                    const res=await api.get('cart/showcart')
-                    const count=res.data.cartItems?.reduce(
-                        (sum,item)=>sum+item.quantity,0
-                    )
-                    setcartCount(count)
-                }
-                catch(err){
-                    console.log(err)
-                }
-            }
-            fetchCart()
-        },[])
-    const increamentCart=()=>setcartCount((prev)=>prev+1)
-    const resetcart=(count)=>setcartCount(count)
+import React, { createContext, useContext, useEffect, useState } from "react";
+import api from "../../Axios";
+const Cartcontext = createContext();
+export function Cartprovider({ children }) {
+  const [cartCount, setcartCount] = useState(0);
+
+  const fetchCart = async () => {
+    try {
+      const res = await api.get("cart/countcart");
+      setcartCount(res.data.count);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchCart();
+  }, []);
+  const incrementCart = () => setcartCount((prev) => prev + 1);
+    const decrementCart = () => setcartCount(prev => Math.max(prev - 1, 0));
+  const resetcart = (count) => setcartCount(count);
+
   return (
-   <Cartcontext.Provider value={{cartCount,increamentCart,resetcart}}>
-    {childern}
-   </Cartcontext.Provider>
-  )
+    <Cartcontext.Provider value={{ cartCount, incrementCart,decrementCart, resetcart,fetchCart }}>
+      {children}
+    </Cartcontext.Provider>
+  );
 }
-export const useCart=()=>useContext(Cartcontext)
+export const useCart = () => useContext(Cartcontext);

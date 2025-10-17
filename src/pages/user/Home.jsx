@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/User/Navbar";
 import banner from "../../assets/banner6.jpg";
 import Categorycard from "../../components/User/Categorycard";
-
+import api from "../../Axios";
 export default function Home() {
+ 
   return (
     <>
-      <Navbar />
+    {/* <Navbar/> */}
       <section
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: `url(${banner})` }}
@@ -22,12 +23,13 @@ export default function Home() {
             accessories, and more. Shop now and elevate your style!
           </p>
           <div className="mt-6 flex justify-center space-x-4">
-            <a
+            
+            {/* <a
               href="/productview"
               className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition"
             >
               Shop Now
-            </a>
+            </a> */}
             
           </div>
         </div>
