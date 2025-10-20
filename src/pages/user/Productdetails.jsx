@@ -61,7 +61,7 @@ export default function Productdetails() {
               <img
                 src={`http://localhost:3000/uploads/${product.productimg}`}
                 alt={product.name}
-                className="w-64 h-70 object-cover rounded-lg shadow"
+                className="w-full h-110 object-cover rounded-lg shadow"
               />
             </div>
 

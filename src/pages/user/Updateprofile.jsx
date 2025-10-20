@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/User/Navbar";
 import api from "../../Axios";
+import { useAuth } from "./Authcontext";
 
 export default function UpdateProfile() {
-  const [user, setUser] = useState(null);
+  const [profile, setUser] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState(null);
   const [existingImg, setExistingImg] = useState("");
-
+  const { user, Updateuser } = useAuth();
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -16,6 +17,7 @@ export default function UpdateProfile() {
         console.log(res.data);
 
         const userData = res.data.user;
+        console.log(res.data);
         setUser(userData);
         setName(userData.name);
         setEmail(userData.email);
@@ -42,15 +44,19 @@ export default function UpdateProfile() {
           "Content-Type": "multipart/form-data",
         },
       });
-const updatedUser = {
-      name,
-      email,
-      profile_image: image ? image.name : existingImg, // fallback to existing if no new image
-    };
-
+      // const updatedUser = {
+      //   name,
+      //   email,
+      //   profile_image: image ? image.name : existingImg, 
+      // };
+      const updatedUser=res.data.data
+      console.log(updatedUser)
+      // localStorage.setItem("user", JSON.stringify(updatedUser));
+      Updateuser({...updatedUser});
       alert(res.data.message || "Profile updated successfully");
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+
+      setExistingImg(updatedUser.profile_image);
+      // setUser(updatedUser);
     } catch (err) {
       alert(err.response?.data?.message || "Update failed");
     }

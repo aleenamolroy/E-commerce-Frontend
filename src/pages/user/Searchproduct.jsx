@@ -40,11 +40,11 @@ export default function Searchproduct() {
                 key={product._id}
                 className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                <div className="w-full  bg-gray-100 flex items-center justify-center overflow-hidden">
                   <img
                     src={`http://localhost:3000/uploads/${product.productimg}` || "https://via.placeholder.com/300x300?text=No+Image"}
                     alt={product.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-100"
                   />
                 </div>
                 <div className="p-4">

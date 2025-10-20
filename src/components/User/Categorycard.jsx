@@ -27,7 +27,7 @@ export default function Categorycard() {
             <img
               src={`http://localhost:3000/uploads/${product.productimg}`}
               alt={product.name}
-              className="w-full h-40 object-cover"
+              className="w-full h-100 object-cover"
             />
             <h3 className="text-lg font-semibold text-gray-700">
               {product.name}

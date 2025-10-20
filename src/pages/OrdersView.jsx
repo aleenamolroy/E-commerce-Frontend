@@ -6,7 +6,7 @@ import { PrefetchPageLinks, useParams } from "react-router-dom";
 export default function OrdersView() {
   const [open, setOpen] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [iscancelled,setiscancelled]=useState({})
+  const [iscancelled, setiscancelled] = useState({});
   const paymentStatusOptions = ["pending", "paid", "failed"];
   const shippingStatusOptions = ["pending", "shipped", "delivered"];
   useEffect(() => {
@@ -14,6 +14,7 @@ export default function OrdersView() {
       try {
         const res = await api.get("order/vieworders");
         setOrders(res.data.orders || []);
+        console.log(res.data.orders);
       } catch (err) {
         console.log(err);
         console.error("API Error:", err.response?.data || err.message);
@@ -37,12 +38,14 @@ export default function OrdersView() {
       };
 
       const res = await api.put(`/order/update/${order._id}`, payload);
-      if (res.data.updatedOrder) {
+      console.log("API response:", res.data);
+      if (res.data.updateOrder) {
         setOrders((prev) =>
           prev.map((o) => (o._id === order._id ? res.data.updatedOrder : o))
         );
       }
-
+      console.log(res.data.updateOrder);
+      console.log("hello");
       alert("Order updated successfully!");
     } catch (err) {
       console.error(err);
@@ -50,26 +53,28 @@ export default function OrdersView() {
     }
   };
 
-  
-const handlecancellation=async(orderId)=>{
-  
-  const confirmed=confirm("Are you sure you want to cancel this product")
-  if(!confirmed) return;
-  try{
-      const res=await api.delete(`order/cancel/${orderId}`,{data:{shippingStatus:'cancelled'}})
-      console.log(res.data)
-      if(res.status===200){
-        alert(`order ${orderId} has been canceled`)
-      setCancelledOrders(prev => ({ ...prev, [orderId]: true }));
+  const handlecancellation = async (orderId) => {
+    const confirmed = confirm("Are you sure you want to cancel this product");
+    if (!confirmed) return;
+    try {
+      const res = await api.delete(`order/cancel/${orderId}`, {
+        data: { shippingStatus: "cancelled" },
+      });
+      console.log(res.data);
+      if (res.status === 200) {
+        alert(`order ${orderId} has been canceled`);
+        setCancelledOrders((prev) => ({ ...prev, [orderId]: true }));
+      } else {
+        alert("cancelation failed please try again.");
       }
-      else{
-        alert('cancelation failed please try again.')
-      }
-  }
-  catch(err){
-    alert(err.response?.data?.message || "Failed to cancel order something went wrong")
-  }
-}
+    } catch (err) {
+      alert(
+        err.response?.data?.message ||
+          "Failed to cancel order something went wrong"
+      );
+    }
+  };
+
   return (
     <div>
       <div className="flex min-h-screen bg-gray-100">
@@ -107,11 +112,11 @@ const handlecancellation=async(orderId)=>{
                       </td>
                       <td className="py-2 px-4 border">₹{order.Amount}</td>
                       <td className="py-2 px-4 border">
-                        <span className="border-1 px-3 bg-amber-200 rounded py-1">
+                        {/* <span className="border-1 px-3 bg-amber-200 rounded py-1">
                           {order.payment}
-                        </span>
+                        </span> */}
                         <select
-                          value={order.paymentStatus}
+                          value={order.payment}
                           onChange={(e) =>
                             handleLocalChange(
                               order._id,
@@ -127,12 +132,12 @@ const handlecancellation=async(orderId)=>{
                             </option>
                           ))}
                         </select>
-                        <span className="ml-3 px-3 py-1  border-1 bg-amber-200">
+                        {/* <span className="ml-3 px-3 py-1  border-1 bg-amber-200">
                           {order.status}
-                        </span>
+                        </span> */}
 
                         <select
-                          value={order.shippingStatus}
+                          value={order.status}
                           onChange={(e) =>
                             handleLocalChange(
                               order._id,
@@ -156,8 +161,20 @@ const handlecancellation=async(orderId)=>{
                         </button>
                       </td>
                       <td>
-                        <button onClick={()=>handlecancellation(order._id)} disabled={iscancelled} className={`px-4 py-2 rounded text-white font-medium transition 
-                          ${iscancelled ? 'bg-gray-500 cursor-not-allowed' : 'bg-red-700 hover:bg-red-600 cursor-pointer'}`}>{iscancelled ? 'Cancelled':'Cancel'}</button>
+                        <button
+                          onClick={() => handlecancellation(order._id)}
+                          disabled={order.status === "cancelled"}
+                          className={`px-4 py-2 rounded text-white font-medium transition 
+    ${
+      order.status === "cancelled"
+        ? "bg-gray-500 cursor-not-allowed"
+        : "bg-red-700 hover:bg-red-600 cursor-pointer"
+    }`}
+                        >
+                          {order.status === "cancelled"
+                            ? "Cancelled"
+                            : "Cancel"}
+                        </button>
                       </td>
                     </tr>
                   ))}
