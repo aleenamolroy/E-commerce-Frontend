@@ -10,6 +10,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await api.post("admin/AdminLogin", { email, password });
+      console.log({ email, password });
       const userdata = {
         id: res.data._id.toString(),
         type: res.data.type,
@@ -24,8 +25,8 @@ export default function Login() {
         const message = err.response.data?.message || "something went wrong";
         if (status === 401) {
           alert("Unauthorized :" + message);
-        }else{
-          alert("Network error or server not responding!")
+        } else {
+          alert("Network error or server not responding!");
         }
       }
     }

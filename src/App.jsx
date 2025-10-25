@@ -22,6 +22,7 @@ import Viewprofile from "./pages/user/Viewprofile";
 import Order from "./pages/user/Order";
 import Updateprofile from "./pages/user/Updateprofile";
 import Searchproduct from "./pages/user/Searchproduct";
+
 export default function App() {
   return (
     <div>
@@ -115,9 +116,7 @@ export default function App() {
           path="/login"
           element={
             <Authprovider>
-              <Cartprovider>
                 <Userlogin />
-              </Cartprovider>
             </Authprovider>
           }
         />
