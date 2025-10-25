@@ -25,7 +25,7 @@ export default function Categorycard() {
             className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer overflow-hidden block"
           >
             <img
-              src={`http://localhost:3000/uploads/${product.productimg}`}
+              src={`${api.defaults.baseURL}/uploads/${product.productimg}`}
               alt={product.name}
               className="w-full h-100 object-cover"
             />
