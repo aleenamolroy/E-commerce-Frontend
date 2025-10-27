@@ -59,7 +59,7 @@ export default function Productdetails() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="flex justify-center">
               <img
-                src={`http://localhost:3000/uploads/${product.productimg}`}
+                src={`${api.defaults.baseURL}/uploads/${product.productimg}`}
                 alt={product.name}
                 className="w-full h-110 object-cover rounded-lg shadow"
               />

@@ -95,7 +95,7 @@ export default function UpdateProfile() {
             {existingImg && (
               <div className="my-2">
                 <img
-                  src={`http://localhost:3000/uploads/${existingImg}`}
+                  src={`${api.defaults.baseURL}/uploads/${existingImg}`}
                   alt="Current Profile"
                   className="w-32 h-32 object-cover border rounded"
                 />

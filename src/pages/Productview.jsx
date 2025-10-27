@@ -107,7 +107,7 @@ export default function Productview() {
                   <td className="px-6 py-4">
                     {product.productimg ? (
                       <img
-                        src={`http://localhost:3000/uploads/${product.productimg}`}
+                        src={`${api.defaults.baseURL}/uploads/${product.productimg}`}
                         alt={product.name}
                         className="w-30 h-20 object-cover rounded"
                       />
