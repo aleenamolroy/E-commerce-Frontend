@@ -37,18 +37,18 @@ export default function Viewusers() {
   }
   return (
   <div className="flex min-h-screen bg-gray-100">
-    {/* Sidebar */}
+
     <Sidebar open={open} />
 
-    {/* Main content */}
+
     <div className="flex flex-1 flex-col transition-all duration-300 ml-0 md:ml-64">
       <Navbar open={open} setOpen={setOpen} />
 
       <div className="p-4 sm:p-6 lg:p-8 overflow-x-auto">
         <h1 className="text-2xl font-bold mb-6 text-center">Users</h1>
 
-        <div className="overflow-x-auto bg-white shadow rounded-lg">
-          <table className="min-w-full border-collapse">
+        <div className="overflow-x-auto bg-white shadow rounded-lg mt-20">
+          <table className="min-w-full border-collapse mt-5">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
                 <th className="py-3 px-4 text-left">Name</th>
