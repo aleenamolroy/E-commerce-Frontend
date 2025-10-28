@@ -101,7 +101,7 @@ export default function Cartview() {
                 className="flex items-center bg-white p-4 rounded-xl shadow"
               >
                 <img
-                  src={`${api.defaults.baseURL}/uploads/${item.product.productimg}`}
+                  src={`${api.defaults.baseURL}uploads/${item.product.productimg}`}
                   alt={item.product.name}
                   className="w-20 h-20 object-cover rounded-lg"
                 />

@@ -72,7 +72,7 @@ export default function Order() {
                 className="flex items-start space-x-4 border-t pt-4 mt-4"
               >
                 <img
-                  src={`${api.defaults.baseURL}/uploads/${item.product.productimg}`}
+                  src={`${api.defaults.baseURL}uploads/${item.product.productimg}`}
                   alt={item.product.name}
                   className="w-20 h-20 object-cover rounded border"
                 />

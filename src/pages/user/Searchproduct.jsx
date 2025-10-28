@@ -42,7 +42,7 @@ export default function Searchproduct() {
               >
                 <div className="w-full  bg-gray-100 flex items-center justify-center overflow-hidden">
                   <img
-                    src={`${api.defaults.baseURL}/uploads/${product.productimg}` || "https://via.placeholder.com/300x300?text=No+Image"}
+                    src={`${api.defaults.baseURL}uploads/${product.productimg}` || "https://via.placeholder.com/300x300?text=No+Image"}
                     alt={product.name}
                     className="object-cover w-full h-100"
                   />

@@ -114,7 +114,7 @@ export default function Navbar() {
                 <div className="relative space-y-1 flex">
                   <Link to="/profile">
                     <img
-                      src={`${api.defaults.baseURL}/uploads/${user.profile_image}?t=${Date.now()}`}
+                      src={`${api.defaults.baseURL}uploads/${user.profile_image}?t=${Date.now()}`}
                       alt={user.name}
                       className="w-10 h-10 rounded-full cursor-pointer"
                     />

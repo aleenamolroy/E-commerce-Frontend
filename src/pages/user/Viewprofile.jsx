@@ -32,7 +32,7 @@ export default function Viewprofile() {
 
             <img
               className="w-24 h-24 rounded-full border-2 border-indigo-500 object-cover"
-              src={`${api.defaults.baseURL}/uploads/${user.profile_image}`}
+              src={`${api.defaults.baseURL}uploads/${user.profile_image}`}
               alt="User Avatar"
             />
             <h2 className="mt-4 text-xl font-semibold text-gray-800">
