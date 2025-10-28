@@ -2,6 +2,7 @@ import React from "react";
 import { FaArrowLeft, FaArrowRight, FaBox, FaHome, FaShippingFast, FaTachometerAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axois from "axios"
+import api from "../../Axios";
 export default function Sidebar({ open }) {
   const navigate=useNavigate()
   const menuItems = [
@@ -14,7 +15,7 @@ export default function Sidebar({ open }) {
   ];
   const handlePath=async (path)=>{
     if(path === '/adminlogout'){
-      await axois.post('http://localhost:3000/logout',{},{withCredentials:true})
+      await api.post('/logout',{},{withCredentials:true})
       localStorage.removeItem("user")
       navigate("/login")
     }else{
