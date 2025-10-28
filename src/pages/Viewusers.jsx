@@ -64,7 +64,7 @@ export default function Viewusers() {
                     <div>
                       {user.profile_image ? (
                         <img
-                          src={`${api.defaults.baseURL}/uploads/${user.profile_image}`}
+                          src={`${api.defaults.baseURL}uploads/${user.profile_image}`}
                           alt={user.name}
                           className="w-30 h-20 object-cover rounded"
                         />
