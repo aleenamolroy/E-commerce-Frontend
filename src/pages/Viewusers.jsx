@@ -36,53 +36,57 @@ export default function Viewusers() {
     }
   }
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar open={open} />
-      <div className="flex flex-1 flex-col ml-0 md:ml-64 ">
-        <Navbar open={open} setOpen={setOpen} />
-        <div className="mt-30 ml-20">
-          <h1 className="text-2xl font-bold mb-4 text-center ">Users</h1>
-          <table className="w-full table-fixed">
-            <thead>
-              <tr >
-                <th>Name</th>
-                <th>Email</th>
-                <th>Profile</th>
-                <th>Status</th>
+  <div className="flex min-h-screen bg-gray-100">
+    {/* Sidebar */}
+    <Sidebar open={open} />
+
+    {/* Main content */}
+    <div className="flex flex-1 flex-col transition-all duration-300 ml-0 md:ml-64">
+      <Navbar open={open} setOpen={setOpen} />
+
+      <div className="p-4 sm:p-6 lg:p-8 overflow-x-auto">
+        <h1 className="text-2xl font-bold mb-6 text-center">Users</h1>
+
+        <div className="overflow-x-auto bg-white shadow rounded-lg">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-200 text-gray-700">
+              <tr>
+                <th className="py-3 px-4 text-left">Name</th>
+                <th className="py-3 px-4 text-left">Email</th>
+                <th className="py-3 px-4 text-left">Profile</th>
+                <th className="py-3 px-4 text-left">Status</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id} >
-                  <td>
-                    <div>{user.name}</div>
+                <tr
+                  key={user._id}
+                  className="border-b hover:bg-gray-50 transition"
+                >
+                  <td className="py-3 px-4">{user.name}</td>
+                  <td className="py-3 px-4 break-all">{user.email}</td>
+                  <td className="py-3 px-4">
+                    {user.profile_image ? (
+                      <img
+                        src={`${api.defaults.baseURL}uploads/${user.profile_image}`}
+                        alt={user.name}
+                        className="w-16 h-16 object-cover rounded-full border"
+                      />
+                    ) : (
+                      <span className="text-gray-400">No image</span>
+                    )}
                   </td>
-                  <td>
-                    <div>{user.email}</div>
-                  </td>
-                  <td>
-                    <div>
-                      {user.profile_image ? (
-                        <img
-                          src={`${api.defaults.baseURL}uploads/${user.profile_image}`}
-                          alt={user.name}
-                          className="w-30 h-20 object-cover rounded"
-                        />
-                      ) : (
-                        <span className="text-gray-400">No image</span>
-                      )}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="flex space-x-2">
-                      
-                      <button className={`px-3 py-1 rounded ${
-                        user.status === 'active'
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                        : "bg-red-600 text-white hover:bg-red-700"
+                  <td className="py-3 px-4">
+                    <button
+                      className={`px-4 py-1.5 rounded text-white text-sm font-medium ${
+                        user.status === "active"
+                          ? "bg-blue-600 hover:bg-blue-700"
+                          : "bg-red-600 hover:bg-red-700"
                       }`}
-                      onClick={()=>handlestatus(user._id,user.status)}>{user.status === 'active'?"Active":"Inactive"}</button>
-                    </div>
+                      onClick={() => handlestatus(user._id, user.status)}
+                    >
+                      {user.status === "active" ? "Active" : "Inactive"}
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -91,5 +95,6 @@ export default function Viewusers() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
