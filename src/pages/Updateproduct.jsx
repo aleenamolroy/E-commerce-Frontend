@@ -137,7 +137,11 @@ export default function Updateproduct() {
             {existingimg && (
               <div className="my-2">
                 <img
-                  src={`${api.defaults.baseURL}uploads/${existingimg}`}
+                  src={
+                    image
+                      ? URL.createObjectURL(image) 
+                      : `${api.defaults.baseURL}uploads/${existingimg}` 
+                  }
                   alt="product"
                   className="w-32 h-32 object-cover border rounded"
                 />

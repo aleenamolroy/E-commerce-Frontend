@@ -14,12 +14,12 @@ export default function Addproduct() {
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const FetchCategories = async () => {
       try {
         const res = await api.get("/category/list");
-        console.log(res.data.categories)
+        console.log(res.data.categories);
         setCategories(res.data.categories);
       } catch (err) {
         console.log("Error Fetching data:", err);
@@ -45,7 +45,7 @@ export default function Addproduct() {
       const res = await api.post("product/productadd", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(res.data)
+      console.log(res.data);
       alert(res.data.message);
       setName("");
       setPrice("");
@@ -135,6 +135,16 @@ export default function Addproduct() {
                 className="border-1 border-gray-400 rounded-md p-2 w-full max-w-sm mx-auto"
                 required
               />
+              {image && (
+                <div className="mt-4">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Product Preview"
+                    className="w-40 h-40 object-cover rounded-md border shadow-sm"
+                  />
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="bg-blue-700 py-2 px-4 rounded-md cursor-pointer"
