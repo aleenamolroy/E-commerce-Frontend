@@ -13,7 +13,7 @@ export default function OrdersView() {
     const fetchOrder = async () => {
       try {
         const res = await api.get("order/vieworders");
-        setOrders((res.data.orders || []).reverse);
+        setOrders((res.data.orders || []).reverse());
         console.log(res.data.orders);
       } catch (err) {
         console.log(err);
