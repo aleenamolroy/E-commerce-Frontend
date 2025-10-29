@@ -11,7 +11,7 @@ export default function Productview() {
     const productFetch = async () => {
       try {
         const res = await api.get("product/list");
-        setProducts(res.data.products || []);
+        setProducts((res.data.products || []).reverse());
       } catch (err) {
         if (err.response) {
           const status = err.response.status;
