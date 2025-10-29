@@ -47,12 +47,12 @@ export default function UpdateProfile() {
       // const updatedUser = {
       //   name,
       //   email,
-      //   profile_image: image ? image.name : existingImg, 
+      //   profile_image: image ? image.name : existingImg,
       // };
-      const updatedUser=res.data.data
-      console.log(updatedUser)
+      const updatedUser = res.data.data;
+      console.log(updatedUser);
       // localStorage.setItem("user", JSON.stringify(updatedUser));
-      Updateuser({...updatedUser});
+      Updateuser({ ...updatedUser });
       alert(res.data.message || "Profile updated successfully");
 
       setExistingImg(updatedUser.profile_image);
@@ -95,8 +95,12 @@ export default function UpdateProfile() {
             {existingImg && (
               <div className="my-2">
                 <img
-                  src={`${api.defaults.baseURL}uploads/${existingImg}`}
-                  alt="Current Profile"
+                  src={
+                    image
+                      ? URL.createObjectURL(image) 
+                      : `${api.defaults.baseURL}uploads/${existingImg}` 
+                  }
+                  alt="Profile Preview"
                   className="w-32 h-32 object-cover border rounded"
                 />
               </div>
