@@ -12,7 +12,7 @@ export default function Categoryview() {
     try {
       const response = await api.get("category/list");
       console.log(response.data);
-      setCategory(response.data.categories);
+      setCategory((response.data.categories|| []).reverse());
     } catch (err) {
       if (err.response) {
         const status = err.response.status;
